@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mensagem Secreta 💖</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe6f2;
+            color: #ff4d88;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #ff1a66;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #mensagem {
+            font-size: 1.5rem;
+            white-space: pre-wrap;
+            border: 2px solid #ff4d88;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            color: #ff1a66;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 100px;
+            width: 80%;
+            text-align: center;
+            overflow: hidden;
+            display: none;
+        }
+
+        button {
+            background-color: #ff4d88;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #ff1a66;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>💖 Mensagem Secreta 💖</h1>
+    <div id="mensagem"></div>
+    <button onclick="revelarMensagem()">Revelar Mensagem</button>
+
+    <script>
+        // Mensagem oculta
+        const mensagemOriginal = "love u branquinha safadinha ! ❤️";
+        let mensagemCriptografada = criptografar(mensagemOriginal, 3);
+        let index = 0;
+
+        // Função para criptografar a mensagem (Cifra de César)
+        function criptografar(mensagem, chave) {
+            let resultado = '';
+            for (let i = 0; i < mensagem.length; i++) {
+                let caractere = mensagem[i];
+                if (caractere.match(/[a-zA-Z]/)) {
+                    let base = caractere === caractere.toUpperCase() ? 65 : 97;
+                    resultado += String.fromCharCode((caractere.charCodeAt(0) - base + chave) % 26 + base);
+                } else {
+                    resultado += caractere;
+                }
+            }
+            return resultado;
+        }
+
+        // Mostrar a mensagem oculta criptografada
+        document.getElementById('mensagem').innerText = mensagemCriptografada;
+
+        // Função para revelar a mensagem com efeito de digitação
+        function revelarMensagem() {
+            const mensagemElemento = document.getElementById('mensagem');
+            mensagemElemento.innerText = '';
+            mensagemElemento.style.display = 'block';
+
+            const mensagemDecifrada = mensagemOriginal;
+            index = 0;
+
+            function digitarMensagem() {
+                if (index < mensagemDecifrada.length) {
+                    mensagemElemento.innerText += mensagemDecifrada.charAt(index);
+                    index++;
+                    setTimeout(digitarMensagem, 50); // Velocidade da digitação (em ms)
+                }
+            }
+
+            digitarMensagem();
+        }
+    </script>
+
+</body>
+</html>
